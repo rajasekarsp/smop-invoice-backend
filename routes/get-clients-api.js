@@ -15,19 +15,8 @@ router.get('/', function (req, res, next) {
   }
 
   const getTasks = async () => {
-    var query = 'SELECT * FROM invoices INNER JOIN clients ON invoices.clientId = clients.id';
+    var query = "SELECT * FROM clients";
     const results = await execute(query);
-    for (var i = 0; i < results.length; i++) {
-      var invoiceId = results[i].id;
-      console.log("index i: " + i);
-      var prodQuery = 'SELECT * FROM products where invoiceId = invoiceId';
-      const prodResults = await execute(prodQuery);
-      results[i].products = [];
-      for (var j = 0; j < prodResults.length; j++) {
-        console.log("index jjjjj: " + j);
-        results[i].products.push(prodResults[j]);
-      }
-    }
     return results;
 
     /*
