@@ -41,10 +41,10 @@ router.post('/', function (req, res, next) {
   }
 
   formatMyDate = function (dateStr) {
-    return new Date(dateStr);
+    //return new Date(dateStr);
     // console.log(dateStr);
-    // let splitArr = dateStr.split("/");
-    // return splitArr[2] + "-" + splitArr[1] + "-" + splitArr[0];
+    let splitArr = dateStr.split("/");
+    return splitArr[2] + "-" + splitArr[1] + "-" + splitArr[0];
   }
 
   getTasks().then((rows) => {
