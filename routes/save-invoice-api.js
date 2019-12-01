@@ -18,7 +18,7 @@ router.post('/', function (req, res, next) {
     let prodInsertResults;
     var params = req.body;
     var query = `INSERT INTO invoices (clientId, invoiceDate, invoiceNo, eWayBillNo, gstType, gstSlab, goodsValue, packingValue, gstValue, totalAmount, advanceAmount, balanceAmount, preparedBy, checkedBy, refNo, despatchedThru, lrNo, despatchedDate, despatchedTo, documentsThru, invoiceOrgType, createdDate) VALUES ?  `;
-    let values = [[params.clientId, formatMyDate(params.invoiceDate), params.invoiceNo, params.eWayBillNo, params.gstType, params.gstSlab, params.goodsValue, params.packingValue, params.gstValue, params.totalAmount, params.advanceAmount, params.balanceAmount, params.preparedBy, params.checkedBy, params.refNo, params.despatchedThru, params.lrNo, formatMyDate(params.despatchedDate), params.despatchedTo, params.documentsThru, params.invoiceOrgType, new Date()]];
+    let values = [[params.clientId, params.invoiceDate, params.invoiceNo, params.eWayBillNo, params.gstType, params.gstSlab, params.goodsValue, params.packingValue, params.gstValue, params.totalAmount, params.advanceAmount, params.balanceAmount, params.preparedBy, params.checkedBy, params.refNo, params.despatchedThru, params.lrNo, params.despatchedDate, params.despatchedTo, params.documentsThru, params.invoiceOrgType, new Date()]];
     invoiceInsertResults = await execute(query, values);
     for (var i = 0; i < params.products.length; i++) {
       let productParam = params.products[i];
@@ -41,10 +41,10 @@ router.post('/', function (req, res, next) {
   }
 
   formatMyDate = function (dateStr) {
-    //return new Date(dateStr);
+    return new Date(dateStr).toISOString();
     // console.log(dateStr);
-    let splitArr = dateStr.split("/");
-    return splitArr[2] + "-" + splitArr[1] + "-" + splitArr[0];
+    //let splitArr = dateStr.split("/");
+    //return splitArr[2] + "-" + splitArr[1] + "-" + splitArr[0];
   }
 
   getTasks().then((rows) => {
