@@ -23,6 +23,7 @@ router.post('/', function (req, res, next) {
     for (var i = 0; i < params.products.length; i++) {
       let productParam = params.products[i];
       let query = `INSERT INTO products (invoiceId, productName, quantity, rate, ratePer, amount, createdDate) VALUES ?  `;
+      console.log(productParam.productName);
       let values = [[invoiceInsertResults.insertId, productParam.productName, productParam.quantity, productParam.rate, productParam.ratePer, productParam.amount, new Date()]];
       prodInsertResults = await execute(query, values);
     }
