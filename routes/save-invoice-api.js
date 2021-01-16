@@ -40,11 +40,19 @@ router.post('/', function (req, res, next) {
   const getTasks = async () => {
     let invoiceInsertResults;
     let prodInsertResults;
+    let clientInsertResults;
     var params = req.body;
+
+    let clientId = params.clientId;
+    if (!clientId) { /* New Client */
+      let clientInsertQuery = `INSERT INTO clients (clientName, clientAddress1, clientAddress2, clientCity, clientPincode, clientGstNo, createdDate) VALUES ?  `;
+      let clientValues = [[params.clientName, params.clientAddress1, params.clientAddress2, params.clientCity, params.clientPincode, params.clientGstNo, new Date()]];
+      clientInsertResults = await execute(clientInsertQuery, clientValues);
+    }
 
     let insertKeys = "clientId, invoiceDate, invoiceNo, eWayBillNo, gstType, gstSlab, goodsValue, packingValue, gstValue, totalAmount, advanceAmount, balanceAmount, preparedBy, checkedBy, refNo, despatchedThru, lrNo, despatchedDate, despatchedTo, documentsThru, invoiceOrgType, createdDate";
 
-    let values = [[params.clientId, params.invoiceDate, params.invoiceNo, params.eWayBillNo, params.gstType, params.gstSlab, params.goodsValue, params.packingValue, params.gstValue, params.totalAmount, params.advanceAmount, params.balanceAmount, params.preparedBy, params.checkedBy, params.refNo, params.despatchedThru, params.lrNo, params.despatchedDate, params.despatchedTo, params.documentsThru, params.invoiceOrgType, new Date()]];
+    let values = [[params.clientId ? params.clientId : clientInsertResults.insertId, params.invoiceDate, params.invoiceNo, params.eWayBillNo, params.gstType, params.gstSlab, params.goodsValue, params.packingValue, params.gstValue, params.totalAmount, params.advanceAmount, params.balanceAmount, params.preparedBy, params.checkedBy, params.refNo, params.despatchedThru, params.lrNo, params.despatchedDate, params.despatchedTo, params.documentsThru, params.invoiceOrgType, new Date()]];
 
     const keysArray = insertKeys.split(", "); 
     const updateQuery = constructUpdateQuery(keysArray, values);
