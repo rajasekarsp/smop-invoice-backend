@@ -50,9 +50,9 @@ router.post('/', function (req, res, next) {
       clientInsertResults = await execute(clientInsertQuery, clientValues);
     }
 
-    let insertKeys = "clientId, invoiceDate, invoiceNo, eWayBillNo, gstType, gstSlab, goodsValue, packingValue, gstValue, totalAmount, advanceAmount, balanceAmount, preparedBy, checkedBy, refNo, despatchedThru, lrNo, despatchedDate, despatchedTo, documentsThru, invoiceOrgType, createdDate";
+    let insertKeys = "clientId, invoiceDate, invoiceNo, eWayBillNo, gstType, gstSlab, goodsValue, packingValue, gstValue, totalAmount, advanceAmount, balanceAmount, preparedBy, checkedBy, refNo, despatchedThru, lrNo, despatchedDate, despatchedTo, documentsThru, invoiceOrgType, createdDate, year";
 
-    let values = [[params.clientId ? params.clientId : clientInsertResults.insertId, params.invoiceDate, params.invoiceNo, params.eWayBillNo, params.gstType, params.gstSlab, params.goodsValue, params.packingValue, params.gstValue, params.totalAmount, params.advanceAmount, params.balanceAmount, params.preparedBy, params.checkedBy, params.refNo, params.despatchedThru, params.lrNo, params.despatchedDate, params.despatchedTo, params.documentsThru, params.invoiceOrgType, new Date()]];
+    let values = [[params.clientId ? params.clientId : clientInsertResults.insertId, params.invoiceDate, params.invoiceNo, params.eWayBillNo, params.gstType, params.gstSlab, params.goodsValue, params.packingValue, params.gstValue, params.totalAmount, params.advanceAmount, params.balanceAmount, params.preparedBy, params.checkedBy, params.refNo, params.despatchedThru, params.lrNo, params.despatchedDate, params.despatchedTo, params.documentsThru, params.invoiceOrgType, new Date(), params.year]];
 
     const keysArray = insertKeys.split(", "); 
     const updateQuery = constructUpdateQuery(keysArray, values);

@@ -4,6 +4,7 @@ var async = require('async')
 
 router.get('/', function (req, res, next) {
 
+
   const execute = (query) => {
     return new Promise((resove, reject) => {
       connection.query(query,
@@ -15,7 +16,7 @@ router.get('/', function (req, res, next) {
   }
 
   const getTasks = async () => {
-    var query = "SELECT i.*, c.clientName, c.clientAddress1, c.clientAddress2, c.clientCity, c.clientPincode, c.clientGstNo FROM invoices i INNER JOIN clients c ON i.clientId = c.id";
+    var query = `SELECT i.*, c.clientName, c.clientAddress1, c.clientAddress2, c.clientCity, c.clientPincode, c.clientGstNo FROM invoices i INNER JOIN clients c ON i.clientId = c.id where i.year = '${req.query.year}' ORDER BY i.createdDate DESC`;
     const results = await execute(query);
     for (var i = 0; i < results.length; i++) {
       var invoiceId = results[i].id;
@@ -26,7 +27,7 @@ router.get('/', function (req, res, next) {
         results[i].products.push(prodResults[j]);
       }
     }
-    return results;
+    return req.query.year ? results : [];
 
     /*
     if (error) {
