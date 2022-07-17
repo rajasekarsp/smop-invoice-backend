@@ -7,6 +7,7 @@ var indexRouter = require('./routes/index');
 var getInvoicesApiRouter = require('./routes/get-invoices-api');
 var getClientsApiRouter = require('./routes/get-clients-api');
 var saveInvoiceApiRouter = require('./routes/save-invoice-api');
+var saveClientApiRouter = require('./routes/save-client-api');
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -37,7 +38,9 @@ app.use(function(req, res, next) {
 });
 
 app.use('/', indexRouter);
-app.use('/api/v1/getInvoices', getInvoicesApiRouter);
 app.use('/api/v1/getClients', getClientsApiRouter);
+app.use('/api/v1/saveClient', saveClientApiRouter);
+
+app.use('/api/v1/getInvoices', getInvoicesApiRouter);
 app.use('/api/v1/saveInvoice', saveInvoiceApiRouter);
 
